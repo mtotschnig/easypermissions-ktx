@@ -23,16 +23,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
-import kotlinx.android.synthetic.main.fragment_main.*
 import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
 import com.vmadalin.easypermissions.EasyPermissions
+import com.vmadalin.easypermissions.sample.databinding.FragmentMainBinding
 
 private const val TAG = "MainFragment"
 private const val REQUEST_CODE_SMS_PERMISSION = 126
 
 @Suppress("UNUSED")
 class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
-
+    private var _binding: FragmentMainBinding? = null
+    private val binding get() = _binding!!
     // ============================================================================================
     //  Fragment Lifecycle
     // ============================================================================================
@@ -43,12 +44,13 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
         savedInstanceState: Bundle?
     ): View? {
         super.onCreateView(inflater, container, savedInstanceState)
-        return inflater.inflate(R.layout.fragment_main, container, false)
+        _binding = FragmentMainBinding.inflate(inflater, container, false)
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        button_sms.setOnClickListener {
+        binding.buttonSms.setOnClickListener {
             onClickRequestPermissionSMSButton()
         }
     }
@@ -94,5 +96,10 @@ class MainFragment : Fragment(), EasyPermissions.PermissionCallbacks {
                 Manifest.permission.READ_SMS
             )
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

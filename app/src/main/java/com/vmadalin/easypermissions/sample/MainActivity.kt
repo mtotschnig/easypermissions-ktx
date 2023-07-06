@@ -22,20 +22,21 @@ import android.util.Log
 import android.widget.Toast
 import android.widget.Toast.LENGTH_LONG
 import androidx.appcompat.app.AppCompatActivity
-import kotlinx.android.synthetic.main.activity_main.*
 import com.vmadalin.easypermissions.annotations.AfterPermissionGranted
 import com.vmadalin.easypermissions.dialogs.DEFAULT_SETTINGS_REQ_CODE
 import com.vmadalin.easypermissions.dialogs.SettingsDialog
 import com.vmadalin.easypermissions.EasyPermissions
+import com.vmadalin.easypermissions.sample.databinding.ActivityMainBinding
 
 private const val TAG = "MainActivity"
 private const val REQUEST_CODE_CAMERA_PERMISSION = 123
 private const val REQUEST_CODE_STORAGE_PERMISSION = 124
 private const val REQUEST_CODE_LOCATION_AND_CONTACTS_PERMISSION = 125
 
-@Suppress("UNUSED_PARAMETER")
 class MainActivity : AppCompatActivity(),
     EasyPermissions.PermissionCallbacks, EasyPermissions.RationaleCallbacks {
+
+    lateinit var binding: ActivityMainBinding
 
     // ============================================================================================
     //  Activity Lifecycle
@@ -43,19 +44,21 @@ class MainActivity : AppCompatActivity(),
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        button_camera.setOnClickListener {
+        binding.buttonCamera.setOnClickListener {
             onClickRequestPermissionCameraButton()
         }
-        button_storage.setOnClickListener {
+        binding.buttonStorage.setOnClickListener {
             onClickRequestPermissionStorageButton()
         }
-        button_location_and_contacts.setOnClickListener {
+        binding.buttonLocationAndContacts.setOnClickListener {
             onClickRequestPermissionLocationAndContactsButton()
         }
     }
 
+    @Deprecated("Deprecated in Java")
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 

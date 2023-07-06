@@ -31,6 +31,7 @@ import com.vmadalin.easypermissions.models.PermissionRequest
 import com.vmadalin.easypermissions.utils.AnnotationsUtils
 
 private const val TAG = "EasyPermissions"
+private const val USE_ANNOTATIONS = false
 
 /**
  * Utility to request and check System permissions for apps targeting Android M (API &gt;= 23).
@@ -210,7 +211,7 @@ object EasyPermissions {
                 }
             }
 
-            if (grantedList.isNotEmpty() && deniedList.isEmpty()) {
+            if (USE_ANNOTATIONS && grantedList.isNotEmpty() && deniedList.isEmpty()) {
                 AnnotationsUtils.notifyAnnotatedMethods(receiver, AfterPermissionGranted::class) {
                     it.value == requestCode
                 }
